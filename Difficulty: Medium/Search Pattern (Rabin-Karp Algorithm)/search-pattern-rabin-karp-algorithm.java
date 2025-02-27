@@ -57,10 +57,10 @@ class Solution
         ArrayList<Integer> list = new ArrayList<>();
         for(int i = 0; i+M <= N;i++){
             if(targetHashValue == rollingHashValue){
-                list.add(i+1);
+                list.add(i+1); // very less possibility of hash collision hence adding blindly without checking
             }
             if(i+M<N){
-                rollingHashValue = (rollingHashValue * P + text.charAt(i+M) - d*text.charAt(i)) % MOD;
+                rollingHashValue = (rollingHashValue * P + text.charAt(i+M) - text.charAt(i)*d) % MOD;
                 if(rollingHashValue<0){
                     rollingHashValue+=MOD;
                 }
