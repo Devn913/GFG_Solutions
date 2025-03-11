@@ -25,19 +25,17 @@ public class Main {
 class Solution {
     // Function to find maximum product subarray
     int maxProduct(int[] nums) {
-        // code here
         int ans = Integer.MIN_VALUE;
+        int N = nums.length;
         int prefix = 1;
         int suffix = 1;
-        int N = nums.length;
-        
+
         for(int i = 0;i<N;i++){
-            prefix = prefix == 0 ? 1: prefix;
-            suffix = suffix == 0 ? 1: suffix;
-            
-            prefix = prefix*nums[i];
-            suffix = suffix*nums[N - i - 1];
-            ans = Math.max(ans,Math.max(prefix,suffix));
+            prefix = prefix * nums[i];
+            suffix = suffix * nums[N - i -1];
+            ans = Math.max(ans,Math.max(suffix,prefix));
+            if(prefix == 0) prefix = 1;
+            if(suffix == 0) suffix = 1; 
         }
         return ans;
     }
