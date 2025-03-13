@@ -39,16 +39,17 @@ class Main {
 
 
 class Solution {
-    public int maxSubarraySum(int[] arr){
-        int maxSum  = Integer.MIN_VALUE;
-        int currMax = 0;
-        for(int i = 0;i<arr.length;i++){
-            currMax+=arr[i];
-            maxSum  = Math.max(maxSum, currMax);
-            if(currMax<0) currMax = 0; 
-        }
-        return maxSum;
+    int maxSubarraySum(int[] arr) {
+        // Your code here
+        int max_sum = Integer.MIN_VALUE;
         
+        int currSum = 0;
+        
+        for(int num: arr){
+            currSum +=num;
+            max_sum = Math.max(currSum,max_sum);
+            if(currSum<0) currSum = 0;
+        }
+        return max_sum;
     }
-
 }
