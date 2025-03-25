@@ -37,35 +37,37 @@ class Geeks {
 
 class Solution {
     // Function to find the next greater element for each element of the array.
+    
     class Pair{
-        public int index;
-        public int value;
-        Pair(int i, int v){
-            this.index   = i;
-            this.value    = v;
+        int index;
+        int val;
+        Pair(int index, int val){
+            this.index = index;
+            this.val = val;
         }
     }
+
     public ArrayList<Integer> nextLargerElement(int[] arr) {
         // code here
-        ArrayList<Integer> list = new ArrayList<>();
-        for(int i =0;i<arr.length;i++){
-            list.add(-1);
+        ArrayList<Integer> result = new ArrayList<>();
+        for(int i = 0;i<arr.length;i++){
+            result.add(-1);
         }
         Stack<Pair> s = new Stack<>();
-        int index = 0;
-        while(index!=arr.length){
-            if(s.isEmpty()) {
-                s.push(new Pair(index,arr[index]));
-                index++;
+        for(int i = 0;i<arr.length;i++){
+            if(s.isEmpty()){
+                Pair p = new Pair(i,arr[i]);
+                s.push(p);
                 continue;
             }
-            while(!s.isEmpty() && s.peek().value<arr[index]){
-                list.set(s.peek().index,arr[index]);
+            while(!s.isEmpty() && s.peek().val < arr[i]){
+                result.set(s.peek().index,arr[i]);
                 s.pop();
             }
-            s.push(new Pair(index,arr[index]));
-            index++;
+            s.push(new Pair(i,arr[i]));
         }
-        return list;
+        return result;
+        
+
     }
 }
