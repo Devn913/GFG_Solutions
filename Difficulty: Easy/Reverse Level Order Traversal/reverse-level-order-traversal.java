@@ -123,21 +123,20 @@ class Node
 
 class Tree {
     public ArrayList<Integer> reverseLevelOrder(Node root) {
-        // code here
         ArrayList<Integer> result = new ArrayList<>();
-        if(root==null) return result;
+        
         Queue<Node> q = new LinkedList<>();
+        
         q.add(root);
+        
         while(!q.isEmpty()){
-            
-            for(int i = 0;i<q.size();i++){
+            for(int i = q.size();i!=0;i--){
                 Node node = q.poll();
-                result.add(node.data);
                 
                 if(node.right!=null) q.add(node.right);
                 if(node.left!=null) q.add(node.left);
+                result.add(node.data);
             }
-            
         }
         Collections.reverse(result);
         return result;
