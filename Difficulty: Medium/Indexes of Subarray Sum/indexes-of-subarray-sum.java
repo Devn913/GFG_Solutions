@@ -1,74 +1,59 @@
 //{ Driver Code Starts
 import java.io.*;
-import java.lang.*;
 import java.util.*;
 
 class Main {
-    static BufferedReader br;
-    static PrintWriter ot;
-
-    public static void main(String[] args) throws IOException {
-
-        br = new BufferedReader(new InputStreamReader(System.in));
-        ot = new PrintWriter(System.out);
-
-        int t = Integer.parseInt(br.readLine());
+    public static void main(String args[]) throws IOException {
+        BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(read.readLine().trim());
 
         while (t-- > 0) {
+            String line = read.readLine().trim();
+            String[] numsStr = line.split(" ");
+            int[] nums = new int[numsStr.length];
+            for (int i = 0; i < numsStr.length; i++) {
+                nums[i] = Integer.parseInt(numsStr[i]);
+            }
 
-            String s[] = br.readLine().trim().split(" ");
+            int d = Integer.parseInt(read.readLine().trim());
 
-            int n = Integer.parseInt(s[0]);
-            int k = Integer.parseInt(s[1]);
-            int a[] = new int[n];
-            s = br.readLine().trim().split(" ");
-            for (int i = 0; i < n; i++) a[i] = Integer.parseInt(s[i]);
-            Solution obj = new Solution();
-            ArrayList<Integer> res = obj.subarraySum(a, n, k);
-            for (int ii = 0; ii < res.size(); ii++) ot.print(res.get(ii) + " ");
-            ot.println();
+            Solution ob = new Solution();
+            ArrayList<Integer> result = ob.subarraySum(nums, d);
+            // Print all elements in the result list
+            for (int i : result) {
+                System.out.print(i + " ");
+            }
+            System.out.println(); // Print a new line after the result
+            System.out.println("~");
         }
-        ot.close();
     }
 }
+
 // } Driver Code Ends
 
 
+
 class Solution {
-    // Function to find a continuous sub-array which adds up to a given number.
-    static ArrayList<Integer> subarraySum(int[] arr, int n, int s) {
-         ArrayList<Integer> list = new ArrayList<>();
-        // Your code here
-        if(s==0){
-            for(int i=0;i<n;i++){
-                if(arr[i]==0){
-                     list.add(i+1);
-                     list.add(i+1);
-                     return list;
-                }
+    static ArrayList<Integer> subarraySum(int[] arr, int target) {
+        // code here
+        int start = 0;
+        int end   = 0;
+        int sum   = 0;
+        ArrayList<Integer> list = new ArrayList<>();
+        for(start = 0,end = 0;end<arr.length;){
+            sum+=arr[end];
+            end++;
+            while(start<=end && sum>target){
+                sum-=arr[start];
+                start++;
             }
-            list.add(-1);
-            return list;
-        }
-        int left = 0;
-        int right = 0;
-        int currentSum =0;
-        while(right!=n || left!=n){
-            if(currentSum<s  && right!=n){
-                currentSum+=arr[right++];
-            }else if(currentSum>s && left!=n){
-                currentSum-=arr[left++];
-            }else{
-                break;
+            if(sum == target){
+                list.add(start+1);
+                list.add(end);
+                return list;
             }
         }
-        if(currentSum==s ){
-            list.add(left+1);
-            if(right==0) right++;
-            list.add(right);
-        }else{
-            list.add(-1);
-        }
+        list.add(-1);
         return list;
     }
 }
