@@ -38,24 +38,25 @@ class GFG {
 
 
 class Solution {
+     ArrayList<Integer>  result  = new ArrayList<>();
+     
+     public void dfs(ArrayList<ArrayList<Integer>> adj, HashSet<Integer> visited, int node){
+         if(visited.contains(node)) return;
+         visited.add(node);
+         
+         result.add(node);
+         for(int i = 0;i<adj.get(node).size();i++){
+             dfs(adj,visited,adj.get(node).get(i));
+         }
+         return;
+     }
     // Function to return a list containing the DFS traversal of the graph.
-    HashSet<Integer> visited = new HashSet<>();
-    ArrayList<Integer> ans = new ArrayList<>();
-    public void dfs_helper(ArrayList<ArrayList<Integer>> adj, int node){
-        if(visited.contains(node)) return;
-        
-        ans.add(node);
-        visited.add(node);
-        for(int i = 0;i<adj.get(node).size();i++){
-            dfs_helper(adj,adj.get(node).get(i));
-        }
-        return;
-    }
     public ArrayList<Integer> dfs(ArrayList<ArrayList<Integer>> adj) {
         // Code here
-        dfs_helper(adj,0);
-        return ans;
+       
+        HashSet<Integer> visited = new HashSet<>();
         
-        
+        dfs(adj,visited,0);
+        return result;
     }
 }
