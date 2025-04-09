@@ -11,24 +11,22 @@ class Solution {
     // Function to return Breadth First Search Traversal of given graph.
     public ArrayList<Integer> bfs(ArrayList<ArrayList<Integer>> adj) {
         // code here
-        Queue<Integer> q            = new LinkedList<>();
-        ArrayList<Integer> ans   = new ArrayList<>();
-        HashSet<Integer> visited = new HashSet<>();
+        Queue<Integer> q = new LinkedList<>();
+        ArrayList<Integer> result = new ArrayList<>();
+        HashSet<Integer> visited  = new HashSet<>();
         
         q.add(0);
         while(!q.isEmpty()){
             int node = q.poll();
             if(visited.contains(node)) continue;
-            ans.add(node);
+            visited.add(node);
+            result.add(node);
             for(int i = 0;i<adj.get(node).size();i++){
-                // if(visited.contains(node)) continue;
+                if(visited.contains(adj.get(node).get(i))) continue;
                 q.add(adj.get(node).get(i));
             }
-            visited.add(node);
         }
-        return ans;
-        
-        
+        return result;
     }
 }
 
