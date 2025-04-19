@@ -48,39 +48,26 @@ public class Main {
 
 // User function Template for Java
 class Solution {
-    int helper(int[] height, int[] memo, int curr){
-        if(curr >= height.length) return Integer.MAX_VALUE;
-        if(curr ==  height.length -1) return 0;
-        if(memo[curr]!=-1) return memo[curr];
-        int jump1 = Integer.MAX_VALUE,jump2 = Integer.MAX_VALUE;
+    int helper(int[] height, int[] memo, int ind){
+        if(ind==0) return 0;
+        if(ind == 1) return Math.abs(height[0] - height[1]);
+        if(memo[ind]!=-1) return memo[ind];
         
-        int ans1 = helper(height,memo,curr+1);
-        int ans2 = helper(height,memo,curr+2);
-        
-        if(curr+1<height.length){
-            jump1 = Math.abs(height[curr]-height[curr+1]);
-            if(ans1!=Integer.MAX_VALUE){
-                ans1+=jump1;
-            }
-        }
-        if(curr+2<height.length){
-            jump2 = Math.abs(height[curr] - height[curr+2]);
-            if(ans2!=Integer.MAX_VALUE){
-                ans2+=jump2;
-            }
-        }
-        memo[curr] = Math.min(ans1,ans2);
-        return memo[curr];
+        memo[ind] = Math.min(
+            Math.abs(height[ind] - height[ind-1]) + helper(height,memo,ind-1),
+            Math.abs(height[ind] - height[ind-2]) + helper(height,memo,ind-2)
+            );
+        return memo[ind];
         
     }
     int minCost(int[] height) {
-        int[] memo = new int[height.length];
+        int[] memo = new int[height.length+1];
         for(int i = 0;i<memo.length;i++){
             memo[i] = -1;
             
         }
         // code here
-        return helper(height,memo,0);
+        return helper(height,memo,height.length - 1);
     }
 }
 
