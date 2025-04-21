@@ -48,27 +48,108 @@ public class Main {
 
 // User function Template for Java
 class Solution {
-    int helper(int[] height, int[] memo, int ind){
-        if(ind==0) return 0;
-        if(ind == 1) return Math.abs(height[0] - height[1]);
-        if(memo[ind]!=-1) return memo[ind];
+    
+    // Approach 1: Memoization - helper(height,memo,n-1);
+    // TC: O(2^n)
+    // SC: O(1)
+    // int helper(int[] height, int[] memo, int ind){
+    //     if(ind==0) return 0;
+    //     if(ind == 1) return Math.abs(height[0] - height[1]);
+    //     if(memo[ind]!=-1) return memo[ind];
+    //     memo[ind] = Math.min(
+    //         Math.abs(height[ind] - height[ind-1]) + helper(height,memo,ind-1),
+    //         Math.abs(height[ind] - height[ind-2]) + helper(height,memo,ind-2)
+    //         );
+    //     return memo[ind];
+    // }
+    
+    
+    // Approach 2: Dynammic Programming 
+    // TC: O(n)
+    // SC: O(n)
+    // int minCost(int[] height) {
+    //     if(height.length < 2) return 0;
+    //     dp[1] = Math.abs(height[0] - height[1]);
+    //     for(int i = 2;i<height.length;i++){
+    //         dp[i] = Math.min(
+    //             Math.abs(height[i] - height[i-1]) + dp[i-1],
+    //             Math.abs(height[i] - height[i-2]) + dp[i-2]
+    //             );
+    //     }
+    //     return dp[height.length-1];
+    // }
+    
+    // Approach 3: Optimized 
+    // TC: O(n)
+    // SC: O(1)
+    // int minCost(int[] height) {
+    //     if(height.length < 2) return 0;
+    //     int secondPrev = 0;
+    //     int prev = Math.abs(height[0] - height[1]);
+    //     int ans = 0;
+    //     for(int i = 2;i<height.length;i++){
+    //         ans = Math.min(
+    //             Math.abs(height[i] - height[i-1]) + prev,
+    //             Math.abs(height[i] - height[i-2]) + secondPrev
+    //             );
+    //         secondPrev = prev;
+    //         prev = ans;
+         
+    //     }
+    //     return ans;
+    // }
+    
+    
+    
+    int helper(int[] height,int[] memo, int index){
+        if(index>=height.length-1) return 0;
+        if(index==height.length-2) return Math.abs(height[index]-height[index+1]);
+        if(memo[index]!=-1) return memo[index];
+        int choice1 = helper(height,memo,index+1);
+        int choice2 = helper(height,memo,index+2);
         
-        memo[ind] = Math.min(
-            Math.abs(height[ind] - height[ind-1]) + helper(height,memo,ind-1),
-            Math.abs(height[ind] - height[ind-2]) + helper(height,memo,ind-2)
-            );
-        return memo[ind];
+        int ans1    = Math.abs(height[index]-height[index+1]) + choice1;
+        int ans2    = Math.abs(height[index]-height[index+2]) + choice2;
         
+        memo[index] = Math.min(ans1,ans2);
+        return memo[index];
     }
+    
     int minCost(int[] height) {
-        int[] memo = new int[height.length+1];
+        int[] memo =  new int[height.length];
         for(int i = 0;i<memo.length;i++){
             memo[i] = -1;
-            
         }
-        // code here
-        return helper(height,memo,height.length - 1);
+        return helper(height,memo,0);
+        
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
 
