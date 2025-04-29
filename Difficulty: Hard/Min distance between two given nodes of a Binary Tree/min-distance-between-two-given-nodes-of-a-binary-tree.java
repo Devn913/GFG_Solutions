@@ -112,39 +112,37 @@ class GfG {
     int ans = -1;
     public int helper(Node root, int a, int b){
         if(root == null) return -1;
+        int left = helper(root.left,a,b);
+        int right= helper(root.right,a,b);
+        
         if(root.data == a && root.data == b){
             ans = 0;
             return -1;
         }
-        int left,right;
-        left = helper(root.left,a,b);
-        right = helper(root.right,a,b);
         
-        if(left!=-1 && right !=-1){
-            ans = left + right ;
-            return -1;
-        }else if(left == -1 && right == -1) {
-            if(root.data==a || root.data==b) {
-                return 1;
-            }
+        if(left==-1 && right == -1){
+            if(root.data == a || root.data == b) return 1;
             return -1;
         }
-        else if(left == -1){
-            if(root.data==a || root.data==b) {
+        else if(left ==-1){
+            if(root.data == a || root.data == b){
                 ans = right;
                 return -1;
             }
-            return right+1;
-        }else{
-            if(root.data==a || root.data==b) {
+            return 1+right;
+        }else if(right == -1){
+            if(root.data == a || root.data == b){
                 ans = left;
                 return -1;
             }
-            return left+1;
+            return 1+left;
+        }else{
+            ans = left+right;
+            return -1;
         }
     }
-
     int findDist(Node root, int a, int b) {
+        // Your code here
         helper(root,a,b);
         return ans;
         
